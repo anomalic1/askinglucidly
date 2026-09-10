@@ -15,6 +15,10 @@ export function isCloudModel(model: ChatModel) {
     ChatModel.SONAR_FREE,
     ChatModel.NEMOTRON_3_SUPER,
     ChatModel.NEMOTRON_3_ULTRA,
+    ChatModel.LING_3_0_FLASH_SANTE,
+    ChatModel.DOTS_3_NOTE_PREVIEW,
+    ChatModel.NEMOTRON_3_5_LIGHTNING,
+    ChatModel.LING_3_0_FLASH_FIN,
   ].includes(model);
 }
 

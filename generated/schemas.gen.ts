@@ -287,6 +287,10 @@ export const $ChatModel = {
     "sonar:free",
     "nemotron-3-super-120b-a12b:free",
     "nemotron-3-ultra-550b-a55b:free",
+    "ling-3.0-flash-sante:free",
+    "dots-3-note-preview:free",
+    "nemotron-3.5-lightning:free",
+    "ling-3.0-flash-fin:free",
   ],
   title: "ChatModel",
 } as const;

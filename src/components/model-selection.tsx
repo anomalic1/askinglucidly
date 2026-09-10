@@ -40,6 +40,30 @@ export const modelMap: Record<ChatModel, Model> = {
     value: ChatModel.NEMOTRON_3_ULTRA,
     logoUrl: `https://img.logo.dev/nvidia.com?token=${LOGO_TOKEN}&size=128&retina=true&format=png`,
   },
+  [ChatModel.LING_3_0_FLASH_SANTE]: {
+    name: "Ling Sante",
+    description: "Ling 3.0 Flash",
+    value: ChatModel.LING_3_0_FLASH_SANTE,
+    logoUrl: `https://img.logo.dev/nvidia.com?token=${LOGO_TOKEN}&size=128&retina=true&format=png`,
+  },
+  [ChatModel.DOTS_3_NOTE_PREVIEW]: {
+    name: "Dots Note Preview",
+    description: "Dots 3 Note",
+    value: ChatModel.DOTS_3_NOTE_PREVIEW,
+    logoUrl: `https://img.logo.dev/nvidia.com?token=${LOGO_TOKEN}&size=128&retina=true&format=png`,
+  },
+  [ChatModel.NEMOTRON_3_5_LIGHTNING]: {
+    name: "Nemotron Lightning",
+    description: "Lightning fast model",
+    value: ChatModel.NEMOTRON_3_5_LIGHTNING,
+    logoUrl: `https://img.logo.dev/nvidia.com?token=${LOGO_TOKEN}&size=128&retina=true&format=png`,
+  },
+  [ChatModel.LING_3_0_FLASH_FIN]: {
+    name: "Ling Fin",
+    description: "Ling 3.0 Flash Fin",
+    value: ChatModel.LING_3_0_FLASH_FIN,
+    logoUrl: `https://img.logo.dev/nvidia.com?token=${LOGO_TOKEN}&size=128&retina=true&format=png`,
+  },
 };
 
 const ModelItem: React.FC<{ model: Model }> = ({ model }) => (
