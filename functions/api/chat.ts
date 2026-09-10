@@ -1,5 +1,3 @@
-import { tavily } from '@tavily/core';
-
 interface Env {
   NAGA_API_KEY: string;
   SERPER_API_KEY?: string;
@@ -27,10 +25,18 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
         console.warn("[AskLucidly] TAVILY_API_KEY not set. Falling back to non-search generation.");
       } else {
         try {
-          const client = tavily({ apiKey: context.env.TAVILY_API_KEY });
-          const tavilyRes = await client.search(prompt, {
-            searchDepth: "advanced"
+          const tavilyResRaw = await fetch("https://api.tavily.com/search", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              api_key: context.env.TAVILY_API_KEY,
+              query: prompt,
+              search_depth: "advanced"
+            })
           });
+          const tavilyRes: any = await tavilyResRaw.json();
 
           if (tavilyRes && tavilyRes.results) {
              const topResults = tavilyRes.results.slice(0, 5);

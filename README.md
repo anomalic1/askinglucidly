@@ -31,7 +31,7 @@ To protect our API keys from being exposed to the client, we utilize **Cloudflar
 We use [Naga API (api.naga.ac)](https://naga.ac) as our backend LLM provider, giving us access to premium models at a fraction of the cost. Because different models have different capabilities, our Cloudflare edge proxy implements a **dual web-search strategy**:
 
 * **Native Search (`sonar:free`):** When the Perplexity Sonar model is selected, we use its native built-in web search tool. We don't need to run any external scrapers; Sonar handles the search and citation generation automatically.
-* **Manual Search Context Injection (Llama & Nemotron):** When standard LLMs like `llama-3.3-70b-instruct:free` or `nemotron-3-ultra-550b` are selected, they lack native internet access. Our edge proxy intelligently detects this, halts the immediate LLM request, and manually queries the **Tavily API (`api.tavily.com`)** (via `@tavily/core`) to scrape live search results using advanced search depth. It then injects those results directly into the system prompt as context before querying the Naga LLM, effectively giving *any* open-source model high-quality web-search capabilities!
+* **Manual Search Context Injection (Llama & Nemotron):** When standard LLMs like `llama-3.3-70b-instruct:free` or `nemotron-3-ultra-550b` are selected, they lack native internet access. Our edge proxy intelligently detects this, halts the immediate LLM request, and manually queries the **Tavily API (`api.tavily.com`)** to scrape live search results using advanced search depth. It then injects those results directly into the system prompt as context before querying the Naga LLM, effectively giving *any* open-source model high-quality web-search capabilities!
 
 ---
 
