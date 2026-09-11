@@ -63,11 +63,24 @@ export const useChat = () => {
         
         // Map our simple citations to what the UI expects for sources (title, url, text)
         if (data.citations && Array.isArray(data.citations)) {
-           state.sources = data.citations.map((c: any) => ({
-             title: c.title || new URL(c.url || "https://example.com").hostname,
-             url: c.url,
-             text: c.snippet || ""
-           }));
+           state.sources = data.citations.map((c: any) => {
+             if (typeof c === "string") {
+               try {
+                 return { title: new URL(c).hostname, url: c, text: "" };
+               } catch (e) {
+                 return { title: c, url: c, text: "" };
+               }
+             }
+             let domain = "example.com";
+             if (c.url) {
+               try { domain = new URL(c.url).hostname; } catch(e) {}
+             }
+             return {
+               title: c.title || domain,
+               url: c.url || "",
+               text: c.snippet || ""
+             };
+           });
         } else {
            state.sources = [];
         }
