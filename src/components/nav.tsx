@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ModeToggle } from "./mode-toggle";
 import { Button } from "./ui/button";
-import { HistoryIcon, LogOutIcon, PlusIcon, ArrowLeft } from "lucide-react";
+import { HistoryIcon, LogOutIcon, PlusIcon, ArrowLeft, Github } from "lucide-react";
 import { useChatStore } from "@/stores";
 import { useAuth } from "@/lib/auth";
 
@@ -40,6 +40,12 @@ export function Navbar() {
         {!onHomePage && <NewChatButton />}
       </div>
       <div className="flex items-center gap-3">
+        <a href="https://github.com/anomalic1/askinglucidly" target="_blank" rel="noopener noreferrer">
+          <Button variant="ghost" size="sm" className="font-medium gap-2 text-muted-foreground hover:text-foreground">
+            <Github className="w-4 h-4" />
+            <span className="hidden md:inline">Open Source</span>
+          </Button>
+        </a>
         <Link href="/history" passHref>
           <div className="font-medium hover:underline decoration-tint underline-offset-4 transition-all duration-200 ease-in-out transform hover:scale-[1.02] text-left break-words normal-case">
             <div className="flex items-center gap-2">

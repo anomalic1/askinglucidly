@@ -11,7 +11,6 @@
     "generate": "npx @hey-api/openapi-ts --input http://localhost:8000/openapi.json --output ./generated"
   },
   "dependencies": {
-    "@hey-api/openapi-ts": "^0.43.0",
     "@microsoft/fetch-event-source": "^2.0.1",
     "@next/env": "15.5.25",
     "@radix-ui/react-accordion": "^1.2.0",
@@ -59,6 +58,7 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
+    "@hey-api/openapi-ts": "^0.97.3",
     "@tailwindcss/typography": "^0.5.13",
     "@types/lodash": "^4.17.0",
     "@types/node": "^20",
@@ -80,7 +80,8 @@
     "minimatch": "^9.0.7",
     "brace-expansion": "^2.1.4",
     "js-yaml": "^4.3.2",
-    "lodash": "^4.18.1"
+    "lodash": "^4.18.1",
+    "mdast-util-to-hast": "^13.2.1"
   },
   "pnpm": {
     "overrides": {
@@ -97,7 +98,8 @@
       "flatted": "^3.4.4",
       "picomatch": "^2.3.2",
       "defu": "^6.1.7",
-      "lodash": "^4.18.1"
+      "lodash": "^4.18.1",
+      "mdast-util-to-hast": "^13.2.1"
     }
   }
 }
