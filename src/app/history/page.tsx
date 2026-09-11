@@ -20,7 +20,7 @@ export default function RecentsPage() {
           <h1 className="text-xl font-semibold">Chat History</h1>
         </div>
         <Separator className="mb-4" />
-        {error && <ErrorMessage content={error.message} />}
+        {error && <ErrorMessage content={(error as Error).message} />}
         {chats && (
           <ul className="flex flex-col gap-4">
             {chats.map((chat, index) => (

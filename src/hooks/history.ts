@@ -1,17 +1,22 @@
 import { useQuery } from "@tanstack/react-query";
-import { env } from "@/env.mjs";
 import { ChatSnapshot } from "../../generated";
-
-const BASE_URL = env.NEXT_PUBLIC_API_URL;
-
-export const fetchChatHistory = async (): Promise<ChatSnapshot[]> => {
-  return [];
-};
+import { useHistoryStore } from "@/stores";
+import { useEffect, useState } from "react";
 
 export const useChatHistory = () => {
-  return useQuery<ChatSnapshot[], Error>({
-    queryKey: ["chatHistory"],
-    queryFn: fetchChatHistory,
-    retry: false,
-  });
+  // Use local state and hydration approach to avoid hydration mismatch
+  const storeHistory = useHistoryStore((state) => state.history);
+  const [history, setHistory] = useState<ChatSnapshot[]>([]);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    setHistory(storeHistory);
+  }, [storeHistory]);
+
+  return {
+    data: mounted ? history : [],
+    isLoading: !mounted,
+    error: null
+  };
 };

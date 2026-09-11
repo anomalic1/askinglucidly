@@ -6,7 +6,7 @@ import {
   MessageRole,
 } from "../../generated";
 import { useState } from "react";
-import { useConfigStore, useChatStore } from "@/stores";
+import { useConfigStore, useChatStore, useHistoryStore } from "@/stores";
 
 const convertToChatRequest = (query: string, history: ChatMessage[]) => {
   const newHistory: Message[] = history.map((message) => ({
@@ -20,8 +20,9 @@ const convertToChatRequest = (query: string, history: ChatMessage[]) => {
 };
 
 export const useChat = () => {
-  const { addMessage, messages } = useChatStore();
+  const { addMessage, messages, threadId, setThreadId } = useChatStore();
   const { model, proMode } = useConfigStore();
+  const saveThread = useHistoryStore((state) => state.saveThread);
 
   const [streamingMessage, setStreamingMessage] = useState<ChatMessage | null>(
     null,
@@ -83,7 +84,16 @@ export const useChat = () => {
           await new Promise((r) => setTimeout(r, 20)); // stream out 50 words per second
         }
 
-        addMessage({ ...state });
+        const finalMessage = { ...state };
+        addMessage(finalMessage);
+
+        let currentThreadId = threadId;
+        if (!currentThreadId) {
+          currentThreadId = Date.now();
+          setThreadId(currentThreadId);
+        }
+
+        saveThread(currentThreadId, [...messages, { role: MessageRole.USER, content: request.query }, finalMessage], model);
       } catch (e: any) {
         addMessage({
           role: MessageRole.ASSISTANT,

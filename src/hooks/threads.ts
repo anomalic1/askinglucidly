@@ -1,22 +1,24 @@
-import { useQuery } from "@tanstack/react-query";
-import { env } from "@/env.mjs";
 import { ThreadResponse } from "../../generated";
-
-const BASE_URL = env.NEXT_PUBLIC_API_URL;
-
-const fetchChatThread = async (threadId: number): Promise<ThreadResponse> => {
-  throw new Error("Thread persistence not implemented on the edge yet.");
-};
+import { useHistoryStore } from "@/stores";
+import { useEffect, useState } from "react";
 
 export const useChatThread = (threadId?: number) => {
-  const { data, isLoading, error } = useQuery<ThreadResponse | null, Error>({
-    queryKey: ["thread", threadId],
-    queryFn: async () => {
-      if (!threadId) {
-        return null;
-      }
-      return fetchChatThread(threadId);
-    },
-  });
-  return { data, isLoading, error };
+  const storeThreads = useHistoryStore((state) => state.threads);
+  const [thread, setThread] = useState<ThreadResponse | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    if (threadId && storeThreads[threadId]) {
+      setThread(storeThreads[threadId]);
+    } else {
+      setThread(null);
+    }
+  }, [threadId, storeThreads]);
+
+  return {
+    data: mounted ? thread : null,
+    isLoading: !mounted,
+    error: null
+  };
 };
