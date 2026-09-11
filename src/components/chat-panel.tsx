@@ -56,6 +56,8 @@ const useAutoFocus = (ref: React.RefObject<HTMLTextAreaElement>) => {
 
 export const ChatPanel = ({ threadId }: { threadId?: number }) => {
   const searchParams = useSearchParams();
+  const searchId = searchParams.get("id");
+  const effectiveThreadId = threadId ?? (searchId ? parseInt(searchId, 10) : undefined);
   const queryMessage = searchParams.get("q");
   const hasRun = useRef(false);
 
@@ -66,7 +68,7 @@ export const ChatPanel = ({ threadId }: { threadId?: number }) => {
     isStreamingProSearch,
   } = useChat();
   const { messages, setMessages, setThreadId } = useChatStore();
-  const { data: thread, isLoading, error } = useChatThread(threadId);
+  const { data: thread, isLoading, error } = useChatThread(effectiveThreadId);
   const { user } = useAuth();
 
   const [width, setWidth] = useState(0);
@@ -92,7 +94,7 @@ export const ChatPanel = ({ threadId }: { threadId?: number }) => {
     if (!thread) return;
     setThreadId(thread.thread_id);
     setMessages(thread.messages || []);
-  }, [threadId, thread, setMessages, setThreadId]);
+  }, [effectiveThreadId, thread, setMessages, setThreadId]);
 
   useEffect(() => {
     if (messages.length == 0) {
@@ -125,7 +127,7 @@ export const ChatPanel = ({ threadId }: { threadId?: number }) => {
       {showAuthModal && (
         <AuthModal onClose={() => setShowAuthModal(false)} />
       )}
-      {messages.length > 0 || threadId ? (
+      {messages.length > 0 || effectiveThreadId ? (
         isLoading ? (
           <div className="w-full flex justify-center items-center">
             <LoaderIcon className="animate-spin w-8 h-8" />
