@@ -2,6 +2,8 @@ import React, { FC, memo, useEffect, useMemo, useState } from "react";
 import { MemoizedReactMarkdown } from "./markdown";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
 
 import _ from "lodash";
 import { cn } from "@/lib/utils";
@@ -148,8 +150,8 @@ export const MessageComponent: FC<MessageProps> = ({
         li: isStreaming ? StreamingListItem : ListItem,
       }}
       className="prose dark:prose-invert inline leading-relaxed break-words prose-td:border prose-th:border prose-td:p-2 prose-th:p-2 prose-table:border-collapse"
-      remarkPlugins={[remarkGfm]}
-      rehypePlugins={[rehypeRaw]}
+      remarkPlugins={[remarkGfm, remarkMath]}
+      rehypePlugins={[rehypeRaw, rehypeKatex]}
     >
       {parsedMessage}
     </MemoizedReactMarkdown>
