@@ -2,14 +2,16 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { ConfigStore, createConfigSlice } from "./slices/configSlice";
 import { createMessageSlice, ChatStore } from "./slices/messageSlice";
+import { createHistorySlice, HistoryStore } from "./slices/historySlice";
 
-type StoreState = ChatStore & ConfigStore;
+type StoreState = ChatStore & ConfigStore & HistoryStore;
 
 const useStore = create<StoreState>()(
   persist(
     (...a) => ({
       ...createMessageSlice(...a),
       ...createConfigSlice(...a),
+      ...createHistorySlice(...a),
     }),
     {
       name: "store",
@@ -17,6 +19,8 @@ const useStore = create<StoreState>()(
         model: state.model,
         localMode: state.localMode,
         proMode: state.proMode,
+        history: state.history,
+        threads: state.threads,
       }),
     },
   ),
@@ -40,3 +44,6 @@ export const useConfigStore = () =>
     proMode: state.proMode,
     toggleProMode: state.toggleProMode,
   }));
+
+export const useHistoryStore = <T>(selector: (state: StoreState) => T): T =>
+  useStore(selector);
