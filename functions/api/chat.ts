@@ -1,6 +1,7 @@
 interface Env {
   NAGA_API_KEY: string;
   SERPER_API_KEY?: string;
+  TAVILY_API_KEY?: string;
 }
 
 type PagesFunction<Env = any> = (context: {
@@ -18,12 +19,40 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     let finalPrompt = prompt;
     let manualCitations: any[] = [];
 
-    // If it's not Sonar, we must manually fetch web results using Serper
+    // If it's not Sonar, we must manually fetch web results using Tavily (Serper kept as a commented-out backup)
     if (userModel !== "sonar:free") {
-      if (!context.env.SERPER_API_KEY) {
-        console.warn("[AskLucidly] SERPER_API_KEY not set. Falling back to non-search generation.");
+      if (!context.env.TAVILY_API_KEY) {
+        console.warn("[AskLucidly] TAVILY_API_KEY not set. Falling back to non-search generation.");
       } else {
         try {
+          const tavilyResRaw = await fetch("https://api.tavily.com/search", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              api_key: context.env.TAVILY_API_KEY,
+              query: prompt,
+              search_depth: "advanced"
+            })
+          });
+          const tavilyRes: any = await tavilyResRaw.json();
+
+          if (tavilyRes && tavilyRes.results) {
+             const topResults = tavilyRes.results.slice(0, 5);
+             if (topResults.length > 0) {
+                const searchContext = topResults.map((r: any, i: number) => `[${i + 1}] ${r.title}\n${r.content}\n${r.url}`).join("\n\n");
+                finalPrompt = `Please answer the user's query based on the following web search context:\n\n${searchContext}\n\nQuery: ${prompt}`;
+
+                manualCitations = topResults.map((r: any) => ({
+                  title: r.title,
+                  url: r.url,
+                  snippet: r.content
+                }));
+             }
+          }
+
+          /* Keep serp integration aside because its not fast
           const serpRes = await fetch("https://google.serper.dev/search", {
             method: "POST",
             headers: {
@@ -48,8 +77,9 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
               }));
             }
           }
+          */
         } catch (e) {
-          console.error("[AskLucidly] Serper API error:", e);
+          console.error("[AskLucidly] Tavily API error:", e);
         }
       }
     }

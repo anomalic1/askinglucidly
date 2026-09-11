@@ -68,6 +68,10 @@ export enum ChatModel {
   SONAR_FREE = "sonar:free",
   NEMOTRON_3_SUPER = "nemotron-3-super-120b-a12b:free",
   NEMOTRON_3_ULTRA = "nemotron-3-ultra-550b-a55b:free",
+  LING_3_0_FLASH_SANTE = "ling-3.0-flash-sante:free",
+  DOTS_3_NOTE_PREVIEW = "dots-3-note-preview:free",
+  NEMOTRON_3_5_LIGHTNING = "nemotron-3.5-lightning:free",
+  LING_3_0_FLASH_FIN = "ling-3.0-flash-fin:free",
 }
 
 export type ChatRequest = {

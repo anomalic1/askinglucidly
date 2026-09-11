@@ -31,7 +31,7 @@ To protect our API keys from being exposed to the client, we utilize **Cloudflar
 We use [Naga API (api.naga.ac)](https://naga.ac) as our backend LLM provider, giving us access to premium models at a fraction of the cost. Because different models have different capabilities, our Cloudflare edge proxy implements a **dual web-search strategy**:
 
 * **Native Search (`sonar:free`):** When the Perplexity Sonar model is selected, we use its native built-in web search tool. We don't need to run any external scrapers; Sonar handles the search and citation generation automatically.
-* **Manual Search Context Injection (Llama & Nemotron):** When standard LLMs like `llama-3.3-70b-instruct:free` or `nemotron-3-ultra-550b` are selected, they lack native internet access. Our edge proxy intelligently detects this, halts the immediate LLM request, and manually queries the **Serper API (`google.serper.dev`)** to scrape live Google search results. It then injects those results directly into the system prompt as context before querying the Naga LLM, effectively giving *any* open-source model high-quality web-search capabilities!
+* **Manual Search Context Injection (Llama & Nemotron):** When standard LLMs like `llama-3.3-70b-instruct:free` or `nemotron-3-ultra-550b` are selected, they lack native internet access. Our edge proxy intelligently detects this, halts the immediate LLM request, and manually queries the **Tavily API (`api.tavily.com`)** to scrape live search results using advanced search depth. It then injects those results directly into the system prompt as context before querying the Naga LLM, effectively giving *any* open-source model high-quality web-search capabilities!
 
 ---
 
@@ -64,9 +64,9 @@ cp .env.example .env.local
 Open `.env.local` and add your API keys:
 ```env
 NAGA_API_KEY=your_naga_api_key_here
-SERPER_API_KEY=your_serper_api_key_here
+TAVILY_API_KEY=your_tavily_api_key_here
 ```
-*Note: `NAGA_API_KEY` is required for all LLM generations. `SERPER_API_KEY` is required for web search if you select a non-Sonar model (like Llama 3.3 or Nemotron) from the dropdown.*
+*Note: `NAGA_API_KEY` is required for all LLM generations. `TAVILY_API_KEY` is required for web search if you select a non-Sonar model (like Ling or Nemotron) from the dropdown.*
 
 ### Step 3: Running the Development Server
 
@@ -90,7 +90,7 @@ Because we are using Cloudflare Pages Functions (`/functions` folder) instead of
    * **Build output directory:** `.next`
 5. **Configure Environment Variables:**
    * Add `NAGA_API_KEY` to the Cloudflare Pages environment variables in the dashboard.
-   * Add `SERPER_API_KEY` to the environment variables (required if you intend to use Llama or Nemotron models for web search).
+   * Add `TAVILY_API_KEY` to the environment variables (required if you intend to use non-Sonar models for web search).
 6. Click **Save and Deploy**. Your app will be live globally in minutes.
 
 ---
@@ -111,16 +111,9 @@ Because we are using Cloudflare Pages Functions (`/functions` folder) instead of
 
 ---
 
-## 💾 Firebase, Yugabyte & Data Persistence (Optional/Roadmap)
+## 💾 Local Storage & Data Persistence
 
-While AskLucidly is completely stateless and ephemeral out-of-the-box, it was structurally designed to support database backends for users who want chat history without headaches.
-
-**Upcoming:** We will be adding **Yugabyte integration really soon for chat history** to provide a robust, distributed SQL option!
-
-If you wish to add Firebase persistence right now:
-1. Create a Firebase project and add your web credentials to `.env.local` (e.g., `NEXT_PUBLIC_FIREBASE_API_KEY`).
-2. Modify the `src/hooks/history.ts` and `src/hooks/threads.ts` files. Currently, these return mocked empty data to prevent errors on the edge. You can rewire them to fetch and write directly to Firestore.
-3. Because Firestore connects directly via the client side, you can store chat histories safely in the browser, completely bypassing the need to add complexity to the Cloudflare edge proxy!
+AskLucidly has been updated to use browser Local Storage to keep track of simple metrics (like guest message counts). For user chat histories, we will be pivoting towards robust browser-based Local Storage instead of relying on external databases like Yugabyte, ensuring a simplified deployment experience and keeping data securely on the user's device.
 
 ---
 
