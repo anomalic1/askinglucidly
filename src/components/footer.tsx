@@ -5,8 +5,8 @@ export function Footer() {
   return (
     <footer className="w-full flex fixed bottom-0 right-0 p-1 z-50 bg-background/95 backdrop-blur-sm">
       <div className="px-1 w-full flex flex-row justify-end space-x-1">
-        <Button variant="ghost" size="icon" className="hover:bg-accent hover:text-accent-foreground text-muted-foreground transition-colors">
-          <Link href="https://github.com/90renrocraftcracksblogspotcom" target="_blank">
+        <Button variant="ghost" size="icon" className="hover:bg-accent hover:text-accent-foreground text-muted-foreground transition-colors" asChild>
+          <Link href="https://github.com/anomalic1" target="_blank">
             <svg
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"

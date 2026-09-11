@@ -72,7 +72,7 @@ const LocalToggle = () => {
             <span>Requires Ollama setup. </span>
             <a
               className="text-primary hover:underline"
-              href="https://github.com/90renrocraftcracksblogspotcom/askinglucidly"
+              href="https://github.com/anomalic1/askinglucidly"
               target="_blank"
               rel="noreferrer"
             >
