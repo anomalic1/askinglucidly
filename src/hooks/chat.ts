@@ -22,9 +22,9 @@ type StreamEvent =
 const mapSource = (c: any) => {
   if (typeof c === "string") {
     try {
-      return { title: new URL(c).hostname, url: c, text: "" };
+      return { title: new URL(c).hostname, url: c, content: "" };
     } catch {
-      return { title: c, url: c, text: "" };
+      return { title: c, url: c, content: "" };
     }
   }
   let domain = "example.com";
@@ -36,7 +36,7 @@ const mapSource = (c: any) => {
   return {
     title: c.title || domain,
     url: c.url || "",
-    text: c.snippet || c.cited_text || "",
+    content: c.snippet || c.cited_text || "",
   };
 };
 

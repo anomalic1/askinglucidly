@@ -1,8 +1,10 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { ConfigStore, createConfigSlice } from "./slices/configSlice";
+import { ConfigStore, createConfigSlice, SearchMode } from "./slices/configSlice";
 import { createMessageSlice, ChatStore } from "./slices/messageSlice";
 import { createHistorySlice, HistoryStore } from "./slices/historySlice";
+
+export type { SearchMode };
 
 type StoreState = ChatStore & ConfigStore & HistoryStore;
 
