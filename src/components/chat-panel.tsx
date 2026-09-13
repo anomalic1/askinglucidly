@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { AskInput } from "./ask-input";
 
 import { useChatThread } from "@/hooks/threads";
-import { LoaderIcon } from "lucide-react";
+import { LoaderIcon, Github } from "lucide-react";
 import { MessageRole } from "../../generated";
 import MessagesList from "./messages-list";
 import { StarterQuestionsList } from "./starter-questions";
@@ -62,6 +62,8 @@ export const ChatPanel = ({ threadId }: { threadId?: number }) => {
   const {
     handleSend,
     streamingMessage,
+    streamingStatus,
+    streamingThinking,
     isStreamingMessage,
     isStreamingProSearch,
   } = useChat();
@@ -137,6 +139,8 @@ export const ChatPanel = ({ threadId }: { threadId?: number }) => {
               streamingMessage={streamingMessage}
               isStreamingMessage={isStreamingMessage}
               isStreamingProSearch={isStreamingProSearch}
+              streamingThinking={streamingThinking}
+              streamingStatus={streamingStatus}
               onRelatedQuestionSelect={handleSendWithGate}
             />
             <div ref={messageBottomRef} className="h-0" />
@@ -150,9 +154,19 @@ export const ChatPanel = ({ threadId }: { threadId?: number }) => {
         )
       ) : (
         <div className="w-full flex flex-col justify-center items-center">
-          <div className="flex items-center justify-center mb-8">
+          <div className="flex items-center justify-center mb-2">
             <span className="text-3xl font-light tracking-tight">Ask anything</span>
           </div>
+          <a
+            href="https://github.com/anomalic1/askinglucidly"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mb-8 group flex items-center gap-2 rounded-full border border-border/50 bg-card/60 px-3 py-1 text-xs text-muted-foreground transition-all duration-200 hover:border-tint/50 hover:text-foreground hover:shadow-[0_0_16px_rgba(120,120,255,0.15)] no-underline"
+          >
+            <Github className="w-3.5 h-3.5" />
+            <span>100% open source</span>
+            <span className="text-muted-foreground/50 group-hover:text-tint transition-colors">→</span>
+          </a>
           <AskInput sendMessage={handleSendWithGate} />
           <div className="w-full flex flex-row px-3 justify-between space-y-2 pt-1">
             <StarterQuestionsList handleSend={handleSendWithGate} />

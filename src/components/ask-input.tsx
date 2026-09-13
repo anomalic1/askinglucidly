@@ -4,6 +4,7 @@ import { Button } from "./ui/button";
 import { ArrowUp } from "lucide-react";
 
 import { ModelSelection } from "./model-selection";
+import { ModeSelection } from "./mode-selection";
 
 const InputBar = ({
   input,
@@ -22,8 +23,9 @@ const InputBar = ({
           value={input}
         />
       </div>
-      <div className="flex justify-between items-center">
-        <div>
+      <div className="flex justify-between items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
+          <ModeSelection />
           <ModelSelection />
         </div>
         <div className="flex items-center">
@@ -59,7 +61,10 @@ const FollowingUpInput = ({
           value={input}
         />
       </div>
-      <div className="flex items-center">
+      <div className="flex items-center gap-2 pl-2">
+        <div className="hidden md:block">
+          <ModeSelection />
+        </div>
         <Button
           type="submit"
           variant="default"

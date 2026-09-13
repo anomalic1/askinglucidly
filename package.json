@@ -8,7 +8,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "generate": "npx @hey-api/openapi-ts --input http://localhost:8000/openapi.json --output ./generated"
+    "generate": "npx @hey-api/openapi-ts --input http://localhost:8000/openapi.json --output ./generated",
+    "sync-prompts": "node scripts/sync-prompts.mjs",
+    "predev": "node scripts/sync-prompts.mjs",
+    "prebuild": "node scripts/sync-prompts.mjs"
   },
   "dependencies": {
     "@microsoft/fetch-event-source": "^2.0.1",

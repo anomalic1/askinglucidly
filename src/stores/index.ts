@@ -19,6 +19,7 @@ const useStore = create<StoreState>()(
         model: state.model,
         localMode: state.localMode,
         proMode: state.proMode,
+        mode: state.mode,
         history: state.history,
         threads: state.threads,
       }),
@@ -43,6 +44,8 @@ export const useConfigStore = () =>
     setModel: state.setModel,
     proMode: state.proMode,
     toggleProMode: state.toggleProMode,
+    mode: state.mode,
+    setMode: state.setMode,
   }));
 
 export const useHistoryStore = <T>(selector: (state: StoreState) => T): T =>

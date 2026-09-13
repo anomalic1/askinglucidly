@@ -8,7 +8,8 @@ import { ChatPanel } from "@/components/chat-panel";
 
 export default function ChatPage() {
   const { slug } = useParams();
-  const threadId = parseInt(slug as string, 10);
+  const parsed = parseInt(slug as string, 10);
+  const threadId = Number.isFinite(parsed) ? parsed : undefined;
 
   return (
     <div className="h-screen">

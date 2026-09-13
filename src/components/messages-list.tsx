@@ -8,18 +8,23 @@ import {
   MessageRole,
 } from "../../generated";
 import { ProSearchRender } from "./pro-search-render";
+import { ThinkingStream } from "./thinking-stream";
 
 const MessagesList = ({
   messages,
   streamingMessage,
   isStreamingMessage,
   isStreamingProSearch,
+  streamingThinking,
+  streamingStatus,
   onRelatedQuestionSelect,
 }: {
   messages: ChatMessage[];
   streamingMessage: ChatMessage | null;
   isStreamingMessage: boolean;
   isStreamingProSearch: boolean;
+  streamingThinking: string | null;
+  streamingStatus: string | null;
   onRelatedQuestionSelect: (question: string) => void;
 }) => {
   const streamingProResponse = streamingMessage?.agent_response;
@@ -42,6 +47,11 @@ const MessagesList = ({
           </>
         ),
       )}
+      <ThinkingStream
+        thinking={streamingThinking}
+        status={streamingStatus}
+        isStreaming={isStreamingMessage}
+      />
       {isStreamingProSearch && (
         <div className="mb-4">
           <ProSearchRender
