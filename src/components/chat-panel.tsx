@@ -102,11 +102,11 @@ export const ChatPanel = ({ threadId }: { threadId?: number }) => {
     }
   }, [messages, setThreadId]);
 
-  const handleSendWithGate = async (query: string) => {
+  const handleSendWithGate = async (query: string): Promise<boolean> => {
     // If user is logged in, always allow
     if (user) {
       await handleSend(query);
-      return;
+      return true;
     }
 
     // Guest: check message count
@@ -114,12 +114,13 @@ export const ChatPanel = ({ threadId }: { threadId?: number }) => {
     if (count >= 1) {
       // Already used their free message, show auth modal
       setShowAuthModal(true);
-      return;
+      return false;
     }
 
     // Allow the first message and increment count
     incrementGuestMessageCount();
     await handleSend(query);
+    return true;
   };
 
   return (

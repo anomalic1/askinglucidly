@@ -1,14 +1,13 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
-import { useParams } from "next/navigation";
-import { Separator } from "@/components/ui/separator";
-import { ChatMessage } from "../../../../generated";
+import { Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import { ChatPanel } from "@/components/chat-panel";
 
 export default function ChatPage() {
-  const { slug } = useParams();
-  const parsed = parseInt(slug as string, 10);
+  const searchParams = useSearchParams();
+  const threadParam = searchParams.get("t");
+  const parsed = parseInt(threadParam ?? "", 10);
   const threadId = Number.isFinite(parsed) ? parsed : undefined;
 
   return (

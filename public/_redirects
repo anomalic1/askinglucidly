@@ -1,1 +1,1 @@
-/search/* /search/dummy 200
+/search/* /search?t=:splat 301

@@ -24,6 +24,10 @@ const useStore = create<StoreState>()(
         mode: state.mode,
         history: state.history,
         threads: state.threads,
+        // Persist the live conversation too, so a reload or the post-login
+        // redirect back to "/" doesn't wipe what the user was chatting about.
+        messages: state.messages,
+        threadId: state.threadId,
       }),
     },
   ),

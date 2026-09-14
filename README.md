@@ -117,7 +117,7 @@ Because we are using Cloudflare Pages Functions (`/functions` folder) instead of
    * Add `TAVILY_API_KEY` to the environment variables (required for non-Sonar web search and Research/DeepSearch modes).
 6. Click **Save and Deploy**. Your app will be live globally in minutes.
 
-The `public/_redirects` file included in the repo makes Cloudflare serve the `/search` app shell for every `/search/*` URL, so chat history links work on the static export.
+The thread view is a real static page served at `/search?t=<threadId>`, so chat history links work on the static export with no server-side routing. The `public/_redirects` file 301-redirects legacy `/search/<id>` URLs to the new query-param format.
 
 ---
 
@@ -141,7 +141,7 @@ The `public/_redirects` file included in the repo makes Cloudflare serve the `/s
 │   ├── /hooks              # Chat streaming hook, history, threads
 │   └── /stores             # Zustand state management
 ├── /public
-│   └── _redirects          # Cloudflare SPA fallback for /search/* routes
+│   └── _redirects          # 301s legacy /search/<id> URLs to /search?t=<id>
 └── tailwind.config.ts      # Theme and styling configuration
 ```
 

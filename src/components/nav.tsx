@@ -9,8 +9,19 @@ import { useChatStore } from "@/stores";
 import { useAuth } from "@/lib/auth";
 
 const NewChatButton = () => {
+  const { setMessages, setThreadId } = useChatStore();
   return (
-    <Button variant="secondary" size="sm" onClick={() => (location.href = "/")}>
+    <Button
+      variant="secondary"
+      size="sm"
+      onClick={() => {
+        // The live conversation is persisted now, so "New" must clear it
+        // explicitly before heading home.
+        setMessages([]);
+        setThreadId(null);
+        location.href = "/";
+      }}
+    >
       <PlusIcon className="w-4 h-4" />
       <span className="block">&nbsp;&nbsp;New</span>
     </Button>
