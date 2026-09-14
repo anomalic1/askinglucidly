@@ -14,10 +14,10 @@ const InputBar = ({
   setInput: (input: string) => void;
 }) => {
   return (
-    <div className="w-full flex flex-col rounded-xl focus:outline-none px-3 py-2 bg-card border border-border/50">
+    <div className="w-full flex flex-col rounded-2xl focus:outline-none px-3 py-2 bg-card/80 backdrop-blur border border-border/60 shadow-lg shadow-black/5 transition-all duration-200 focus-within:border-tint/50 focus-within:shadow-[0_0_0_1px_hsl(var(--tint)/0.25),0_8px_32px_-8px_hsl(var(--tint)/0.15)]">
       <div className="w-full">
         <TextareaAutosize
-          className="w-full bg-transparent text-md resize-none focus:outline-none p-1"
+          className="w-full bg-transparent text-md resize-none focus:outline-none p-1 placeholder:text-muted-foreground/60"
           placeholder="Ask anything..."
           onChange={(e) => setInput(e.target.value)}
           value={input}
@@ -33,10 +33,10 @@ const InputBar = ({
             type="submit"
             variant="default"
             size="icon"
-            className="rounded-full bg-white text-black aspect-square h-8 w-8 disabled:opacity-20 hover:bg-white/80 overflow-hidden"
+            className="rounded-full bg-tint text-tint-foreground aspect-square h-8 w-8 disabled:opacity-20 hover:bg-tint/90 hover:shadow-[0_0_16px_hsl(var(--tint)/0.4)] active:scale-95 transition-all overflow-hidden"
             disabled={input.trim().length < 2}
           >
-            <ArrowUp size={20} />
+            <ArrowUp size={18} />
           </Button>
         </div>
       </div>
@@ -52,10 +52,10 @@ const FollowingUpInput = ({
   setInput: (input: string) => void;
 }) => {
   return (
-    <div className="w-full flex flex-row rounded-full focus:outline-none px-3 py-1 bg-card border border-border/50 items-center">
+    <div className="w-full flex flex-row rounded-full focus:outline-none px-3 py-1 bg-card/80 backdrop-blur border border-border/60 shadow-lg shadow-black/5 items-center transition-all duration-200 focus-within:border-tint/50 focus-within:shadow-[0_0_0_1px_hsl(var(--tint)/0.25),0_8px_32px_-8px_hsl(var(--tint)/0.15)]">
       <div className="w-full">
         <TextareaAutosize
-          className="w-full bg-transparent text-md resize-none focus:outline-none p-2"
+          className="w-full bg-transparent text-md resize-none focus:outline-none p-2 placeholder:text-muted-foreground/60"
           placeholder="Ask a follow-up..."
           onChange={(e) => setInput(e.target.value)}
           value={input}
@@ -69,10 +69,10 @@ const FollowingUpInput = ({
           type="submit"
           variant="default"
           size="icon"
-          className="rounded-full bg-white text-black aspect-square h-8 w-8 disabled:opacity-20 hover:bg-white/80 overflow-hidden"
+          className="rounded-full bg-tint text-tint-foreground aspect-square h-8 w-8 disabled:opacity-20 hover:bg-tint/90 hover:shadow-[0_0_16px_hsl(var(--tint)/0.4)] active:scale-95 transition-all overflow-hidden"
           disabled={input.trim().length < 2}
         >
-          <ArrowUp size={20} />
+          <ArrowUp size={18} />
         </Button>
       </div>
     </div>

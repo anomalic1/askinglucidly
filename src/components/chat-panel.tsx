@@ -154,21 +154,30 @@ export const ChatPanel = ({ threadId }: { threadId?: number }) => {
         )
       ) : (
         <div className="w-full flex flex-col justify-center items-center">
-          <div className="flex items-center justify-center mb-2">
-            <span className="text-3xl font-light tracking-tight">Ask anything</span>
+          <div className="animate-rise-in flex flex-col items-center mb-6">
+            <span className="text-4xl md:text-5xl font-light tracking-tight text-gradient">
+              Ask anything
+            </span>
+            <span className="mt-3 text-sm text-muted-foreground">
+              Open-source, AI-powered answer engine
+            </span>
           </div>
-          <a
-            href="https://github.com/anomalic1/askinglucidly"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mb-8 group flex items-center gap-2 rounded-full border border-border/50 bg-card/60 px-3 py-1 text-xs text-muted-foreground transition-all duration-200 hover:border-tint/50 hover:text-foreground hover:shadow-[0_0_16px_rgba(120,120,255,0.15)] no-underline"
-          >
-            <Github className="w-3.5 h-3.5" />
-            <span>100% open source</span>
-            <span className="text-muted-foreground/50 group-hover:text-tint transition-colors">→</span>
-          </a>
-          <AskInput sendMessage={handleSendWithGate} />
-          <div className="w-full flex flex-row px-3 justify-between space-y-2 pt-1">
+          <div className="animate-rise-in w-full" style={{ animationDelay: "80ms" }}>
+            <a
+              href="https://github.com/anomalic1/askinglucidly"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center gap-2 rounded-full border border-border/50 bg-card/60 px-3 py-1 text-xs text-muted-foreground transition-all duration-200 hover:border-tint/50 hover:text-foreground hover:shadow-[0_0_16px_rgba(120,120,255,0.15)] no-underline w-fit mx-auto mb-8"
+            >
+              <Github className="w-3.5 h-3.5" />
+              <span>100% open source</span>
+              <span className="text-muted-foreground/50 group-hover:text-tint transition-colors">→</span>
+            </a>
+          </div>
+          <div className="animate-rise-in w-full" style={{ animationDelay: "160ms" }}>
+            <AskInput sendMessage={handleSendWithGate} />
+          </div>
+          <div className="animate-rise-in w-full flex flex-row px-3 justify-between space-y-2 pt-1" style={{ animationDelay: "240ms" }}>
             <StarterQuestionsList handleSend={handleSendWithGate} />
           </div>
         </div>

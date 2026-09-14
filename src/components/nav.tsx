@@ -25,7 +25,7 @@ export function Navbar() {
   const onHomePage = pathname === "/";
 
   return (
-    <header className="w-full flex fixed p-1 z-50 px-3 bg-background/95 justify-between items-center">
+    <header className="w-full flex fixed p-1 z-50 px-3 bg-background/80 backdrop-blur-md border-b border-border/40 justify-between items-center">
       <div className="flex items-center gap-2">
         {!onHomePage && (
           <Button variant="ghost" size="icon" onClick={() => history.back()} className="mr-1">
